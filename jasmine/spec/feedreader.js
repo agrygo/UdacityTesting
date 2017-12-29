@@ -75,6 +75,13 @@ $(function() {
             icon:  i.icon-list
             class="slide-menu"`
           */
+        it('menu changes visibility when menu icon clicked', function() {
+            $('a.menu-icon-link').click();
+            expect(document.body.className).not.toContain('menu-hidden');
+            $('a.menu-icon-link').click();
+            expect(document.body.className).toContain('menu-hidden');
+           
+        });  
      });
     /* TODO: Write a new test suite named "Initial Entries" */
 
