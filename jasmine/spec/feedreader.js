@@ -25,6 +25,7 @@ $(function() {
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
+
         });
 
 
@@ -34,10 +35,10 @@ $(function() {
          */
 
         it('has a URL defined and is not empty', function() {
-            for (var i = 0; i < allFeeds.length; i++) {
-            console.log(allFeeds[i].url);
-            expect(allFeeds[i].url).toBeDefined();
-            }
+            allFeeds.forEach(function(feed) {
+                expect(feed.url).toBeDefined();
+                expect(feed.url.length).not.toBe(0);
+            });
             
         }); 
         /* TODO: Write a test that loops through each feed
