@@ -29,7 +29,8 @@ $(function() {
         });
 
 
-        /* TODO: Write a test that loops through each feed
+        /* 'has a URL defined and is not empty' test
+         * that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
@@ -37,70 +38,67 @@ $(function() {
         it('has a URL defined and is not empty', function() {
             allFeeds.forEach(function(feed) {
                 expect(feed.url).toBeDefined();
-                expect(feed.url.length).not.toBe(0);
+                expect(feed.url).toBeTruthy();
             });
             
         }); 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
+        /* 'has a name defined and is not empty' test
+         *  that loops through each feed in the allFeeds object and ensures it has a name defined
+         *  and that the name is not empty.
          */
         it('has a name defined and is not empty', function() {
             allFeeds.forEach(function(name) {
                 expect(name.url).toBeDefined();
                 expect(name.url.length).not.toBe(0);
+                //TODO:  test that URL is valid;  
+                /*var regex = /_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS/;
+                var url = name.url;
+                var urlCheck =  regex.search(url);
+                console.log(urlCheck);*/
             });
             
         });  
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
+    /* test suite for menu functions */
     describe('The menu', function() {
    
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-            class="menu-hidden"
+        /* 'menu is hidden by default' test
+         *  that ensures the menu element is hidden by default
          */
         it('menu is hidden by default', function() {
-            expect($($(document.body)).hasClass('menu-hidden')).toBe(true);
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         }); 
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-            icon:  i.icon-list
-            class="slide-menu"`
+         /* 'menu changes visibility when menu icon clicked' test
+          *  that ensures the menu changes visibility when the menu icon is clicked.
           */
         it('menu changes visibility when menu icon clicked', function() {
             $('a.menu-icon-link').click();
-            expect(document.body.className).not.toContain('menu-hidden');
+            expect($('body').hasClass('menu-hidden')).toBe(false);
             $('a.menu-icon-link').click();
-            expect(document.body.className).toContain('menu-hidden');
+            expect($('body').hasClass('menu-hidden')).toBe(true);
            
         });  
      });
-    /* TODO: Write a new test suite named "Initial Entries" */
+    /* test suite for initial RSS Feeds */
     describe('Initial Entries', function() {
         beforeEach(function(done) {
                 loadFeed(0,done) 
             });
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
+        /* 'should have a .entry element within the .feed container' test
+         *  that ensures when the loadFeed function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         it('should have a .entry element within the .feed container', function(done) {
-             expect( $('.feed').length ).toBeGreaterThan(0);
+             expect($('.feed').length).toBeGreaterThan(0);
+             expect($('.feed .entry').length).toBeGreaterThan(0);
              done();
         }); 
     }); 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    /* test suite for new RSS Feeds */
     describe('New Feed Selection', function() {
         var currentFeed;
         var newFeed;
@@ -109,18 +107,16 @@ $(function() {
 
             loadFeed(0, function(){
                 currentFeed = $('.feed').html();
-                done();
-            loadFeed(1, function() {
-                newFeed = $('.feed').html();
-                done();
-            });
+                loadFeed(1, function() {
+                    newFeed = $('.feed').html();
+                    done();
+                });
             }); 
             
         });
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
+        /* 'feed changes when a new feed is loaded' test 
+         *  that ensures when a new feed is loaded by the loadFeed function that the content actually changes.
          */
         it('feed changes when a new feed is loaded', function(done) {
             expect(currentFeed).not.toEqual(newFeed);
