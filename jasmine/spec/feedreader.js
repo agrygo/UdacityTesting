@@ -109,10 +109,13 @@ $(function() {
 
             loadFeed(0, function(){
                 currentFeed = $('.feed').html();
+                done();
             loadFeed(1, function() {
                 newFeed = $('.feed').html();
+                done();
             });
             }); 
+            
         });
 
         /* TODO: Write a test that ensures when a new feed is loaded
